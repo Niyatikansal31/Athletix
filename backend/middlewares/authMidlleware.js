@@ -1,0 +1,23 @@
+import jwt from "jsonwebtoken"
+
+const authMiddleware=(req,res,next)=>{
+    const header=req.headers.authorization;
+    if(!header){
+        res.STATUS_CODES.UNAUTHORIZED.json({
+            msg: "User not LoggedIn"
+        })
+        return;
+    }
+    try{
+        const token=header.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.secretToken);
+        req.userPhone=decoded.mobileNumber;
+        next();
+    }catch(err){
+        res.STATUS_CODES.INTERNAL_SERVER_ERROR.json({
+            msg: err.message
+        })
+    }
+}
+
+export default authMiddleware;
