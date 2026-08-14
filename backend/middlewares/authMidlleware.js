@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken"
+import STATUS_CODES from "../utils/StatusCodes.js";
 
 const authMiddleware=(req,res,next)=>{
     const header=req.headers.authorization;
     if(!header){
-        res.STATUS_CODES.UNAUTHORIZED.json({
+        res.status(STATUS_CODES.UNAUTHORIZED).json({
             msg: "User not LoggedIn"
         })
         return;
@@ -14,7 +15,7 @@ const authMiddleware=(req,res,next)=>{
         req.userPhone=decoded.mobileNumber;
         next();
     }catch(err){
-        res.STATUS_CODES.INTERNAL_SERVER_ERROR.json({
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
             msg: err.message
         })
     }
