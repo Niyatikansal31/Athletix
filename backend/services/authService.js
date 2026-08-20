@@ -16,7 +16,6 @@ const signUp=async({name,mobileNumber,password})=>{
         password: hashedPassword
     })
     await newUser.save();
-    return newUser;
 }
 
 
