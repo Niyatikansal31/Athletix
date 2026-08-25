@@ -23,6 +23,12 @@ const signUp=async({name,mobileNumber,password})=>{
         items: []
     })
     await newCart.save();
+
+    const newWishlist=new Wishlist({
+        user: newUser._id,
+        items: []
+    })
+    await newWishlist.save();
 }
 
 
