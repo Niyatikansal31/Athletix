@@ -88,4 +88,6 @@ const deleteProduct=async(req,res)=>{
     }
 }
 
+
+
 export {createProduct,getAllProduct,getById,updateProduct,deleteProduct};

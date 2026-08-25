@@ -8,9 +8,8 @@ import {createProduct,getAllProduct,getById,updateProduct, deleteProduct} from "
 router.post('/',authMiddleware,authorizeAdmin,createProduct)
 router.get('/',getAllProduct)
 router.get('/:id',getById)
-router.patch('/:id',authMiddleware,authorizeAdmin,updateProduct)
-router.delete('/:id',authMiddleware,authorizeAdmin,deleteProduct)
-
+router.patch('/admin/:id',authMiddleware,authorizeAdmin,updateProduct)
+router.delete('/admin/:id',authMiddleware,authorizeAdmin,deleteProduct)
 
 const ProductRoute=router
 export default ProductRoute;

@@ -58,6 +58,14 @@ const productSchema=new mongoose.Schema(
             default: 0,
             min: 0,
             max: 5
+        },
+        returnable: {
+            type: Boolean,
+            default: true
+        },
+        exchangeable: {
+            type: Boolean,
+            default: true
         }
     },
     {

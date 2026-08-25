@@ -1,7 +1,8 @@
 import User from "../models/user.js";
 import bcrypt, { hash } from "bcryptjs"
 import jwt from "jsonwebtoken"
-
+import Cart from "../models/cart.js";
+import Wishlist from "../models/wishlist.js";
 
 const signUp=async({name,mobileNumber,password})=>{
     const user=await User.findOne({mobileNumber: mobileNumber})
@@ -16,6 +17,12 @@ const signUp=async({name,mobileNumber,password})=>{
         password: hashedPassword
     })
     await newUser.save();
+
+    const newCart=new Cart({
+        user: newUser._id,
+        items: []
+    })
+    await newCart.save();
 }
 
 
