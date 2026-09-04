@@ -37,7 +37,8 @@ const userSchema=mongoose.Schema(
                     return value <= new Date();
                 },
                 message: 'Date of birth cannot be in the future.'
-            }
+            },
+            required: true
         },
         gender: {
             type: String,
@@ -46,7 +47,11 @@ const userSchema=mongoose.Schema(
         role: {
             type: String,
             enum: ['user', 'admin'],
-            default: 'admin'
+            default: 'user'
+        },
+        isActive: {
+            type: Boolean,
+            default: true
         }
     },
     {

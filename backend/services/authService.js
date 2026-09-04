@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken"
 import Cart from "../models/cart.js";
 import Wishlist from "../models/wishlist.js";
 
-const signUp=async({name,mobileNumber,password})=>{
+const signUp=async({name,mobileNumber,password,gender,dob,email})=>{
     const user=await User.findOne({mobileNumber: mobileNumber})
     if(user){
         throw new Error("User Already Exists! Please Login instead.");
@@ -14,7 +14,10 @@ const signUp=async({name,mobileNumber,password})=>{
     const newUser=new User({
         name,
         mobileNumber,
-        password: hashedPassword
+        password: hashedPassword,
+        gender,
+        dob,
+        email
     })
     await newUser.save();
 
@@ -36,6 +39,9 @@ const logIn=async({mobileNumber,password})=>{
     const user=await User.findOne({mobileNumber: mobileNumber})
     if(!user){
         throw new Error("User do not Exists! Please Signup instead.");
+    }
+    if(user && user.status==="false"){
+        throw new Error("Your account is deactivated! WOuld you like to Reactivate?")
     }
     const isMatch=await bcrypt.compare(password,user.password);
     const jwtToken=jwt.sign({mobileNumber: mobileNumber, _id: user._id},process.env.secretToken);
@@ -63,5 +69,14 @@ const changePassword=async(oldpassword,newpassword,user)=>{
     return user;
 }
 
+const reactivate=async({mobileNumber,password})=>{
+    const user=await User.findOne({mobileNumber: mobileNumber})
+    const isMatch=await bcrypt.compare(password,user.password)
+    if(!isMatch){
+        throw new Error ("Password Incorrect!")
+    }
+    user.isActive=true;
+    await user.save()
+}
 
-export default {signUp,logIn,changePassword};
+export default {signUp,logIn,changePassword,reactivate};

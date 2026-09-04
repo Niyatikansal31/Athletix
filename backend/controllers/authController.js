@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken"
 import STATUS_CODES from "../utils/StatusCodes.js"
 
 const signUp=async (req,res)=>{
-    const {name,mobileNumber,password}=req.body;
+    const {name,mobileNumber,password,dob,email,gender}=req.body;
     if(!mobileNumber){
         res.status(STATUS_CODES.BAD_REQUEST).json({
             msg: "Please enter mobile number."
@@ -14,12 +14,17 @@ const signUp=async (req,res)=>{
         return;
     }if(!name){
         res.status(STATUS_CODES.BAD_REQUEST).json({
-            msg: "Please enter you name."
+            msg: "Please enter your name."
         })
         return;
     }if(!password){
         res.status(STATUS_CODES.BAD_REQUEST).json({
             msg: "Please enter your password."
+        })
+        return;
+    }if(!dob){
+        res.status(STATUS_CODES.BAD_REQUEST).json({
+            msg: "Please enter your date of Birth."
         })
         return;
     }
@@ -89,5 +94,29 @@ const changePassword = async (req, res) => {
     }
 };
 
+const reactivate=async(req,res)=>{
+    const {mobileNumber,password}=req.body
+    if(!mobileNumber){
+        res.status(STATUS_CODES.BAD_REQUEST).json({
+            msg: "Enter Mobile Number!"
+        })
+    }if(!password){
+        res.status(STATUS_CODES.BAD_REQUEST).json({
+            msg: "Enter Password!"
+        })
+    }
+    
 
-export {signUp,logIn,changePassword};
+    try{
+        const token=await authService.reactivate(req.body)
+        res.status(STATUS_CODES.OK).json({
+            msg: "Account Reactivated!"
+        })
+    }catch(err){
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
+            msg: err.message
+        })
+    }
+}
+
+export {signUp,logIn,changePassword,reactivate};

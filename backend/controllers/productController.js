@@ -55,7 +55,7 @@ const getById=async(req,res)=>{
 
 const updateProduct=async(req,res)=>{
     const id=req.params.id;
-    const {name,description,price,stock,images,category,subcategory,brand,rating,reviews}=req.body;
+    const {name,description,price,stock,images,category,subcategory,brand}=req.body;
     if(!name && !description && !price && !stock && !images && !category && !subcategory && !brand){
         res.status(STATUS_CODES.BAD_REQUEST).json({
             msg: "Update atleast 1 feild!"
