@@ -56,11 +56,25 @@ const getById=async(req,res)=>{
 const updateProduct=async(req,res)=>{
     const id=req.params.id;
     const {name,description,price,stock,images,category,subcategory,brand}=req.body;
-    if(!name && !description && !price && !stock && !images && !category && !subcategory && !brand){
-        res.status(STATUS_CODES.BAD_REQUEST).json({
-            msg: "Update atleast 1 feild!"
-        })
-        return
+    const allowedFields = [
+        "name",
+        "description",
+        "price",
+        "stock",
+        "images",
+        "category",
+        "subcategory",
+        "brand"
+    ];
+
+    const hasUpdate = Object.keys(req.body).some((key) =>
+        allowedFields.includes(key)
+    );
+
+    if (!hasUpdate) {
+        return res.status(STATUS_CODES.BAD_REQUEST).json({
+            msg: "Update at least 1 field!"
+        });
     }
     try{
         const product=await productService.update(req.body,id);

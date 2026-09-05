@@ -85,8 +85,9 @@ const getAllOrder=async(mobileNumber)=>{
 }
 
 
-const getOrderById=async(orderid)=>{
-    const order=await Order.findById({_id: orderid})
+const getOrderByIdUser=async(orderid,userPhone)=>{
+    const user=await User.findOne({mobileNumber: userPhone})
+    const order=await Order.findById({_id: orderid, user: user._id.toString()})
     if(!order){
         throw new Error ("No such order placed!")
     }
@@ -159,4 +160,12 @@ const getOrder=async()=>{
     return orders;
 }
 
-export default {addOrder,getAllOrder,getOrderById,cancel,updateStatus,getOrder};
+const getOrderById=async(orderid)=>{
+    const order=await Order.findById({_id: orderid})
+    if(!order){
+        throw new Error ("No such order placed!")
+    }
+    return order;
+}
+
+export default {addOrder,getAllOrder,getOrderById,cancel,updateStatus,getOrder,getOrderByIdUser};

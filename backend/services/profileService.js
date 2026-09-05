@@ -38,9 +38,10 @@ const update=async(userPhone,updateData)=>{
     )
 }
 
-const deactivate=async(userPhone)=>{
+const deactivate=async(userPhone,reason)=>{
     const user= await User.findOne({mobileNumber: userPhone})
     user.isActive=false;
+    user.reasonForDeactivation=reason;
     await user.save()
 }
 

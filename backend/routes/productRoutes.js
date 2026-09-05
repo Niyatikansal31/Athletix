@@ -5,7 +5,7 @@ import authMiddleware from "../middlewares/authMidlleware.js";
 import authorizeAdmin from "../middlewares/authorizeAdmin.js";
 import {createProduct,getAllProduct,getById,updateProduct, deleteProduct} from "../controllers/productController.js";
 
-router.post('/',authMiddleware,authorizeAdmin,createProduct)
+router.post('/admin/',authMiddleware,authorizeAdmin,createProduct)
 router.get('/',getAllProduct)
 router.get('/:id',getById)
 router.patch('/admin/:id',authMiddleware,authorizeAdmin,updateProduct)

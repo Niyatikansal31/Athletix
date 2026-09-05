@@ -40,8 +40,9 @@ const update=async(req,res)=>{
 
 const deactivate=async(req,res)=>{
     const userPhone=req.userPhone;
+    const reason=req.body.reason;
     try{
-        await profileService.deactivate(userPhone)
+        await profileService.deactivate(userPhone,reason)
         res.status(STATUS_CODES.OK).json({
             msg: "Deactivated successfully!"
         })

@@ -46,16 +46,16 @@ const getAllOrder=async(req,res)=>{
     }
 }
 
-const getOrderById=async(req,res)=>{
+const getOrderByIdUser=async (req,res)=>{
     const orderid=req.params.id;
-
+    const userPhone=req.userPhone
     if(!orderid){
         res.status(STATUS_CODES.BAD_REQUEST).json({
             msg: "Please Enter some orderid"
         })
     }
     try{
-        const order=await orderService.getOrderById(orderid)
+        const order=await orderService.getOrderByIdUser(orderid,userPhone)
         res.status(STATUS_CODES.OK).json({
             order: order
         })
@@ -127,4 +127,24 @@ const getOrderAdmin=async(req,res)=>{
     }
 }
 
-export {addOrder,getAllOrder,getOrderById,cancel,updateStatus,getOrderAdmin}
+const getOrderById=async(req,res)=>{
+    const orderid=req.params.id;
+
+    if(!orderid){
+        res.status(STATUS_CODES.BAD_REQUEST).json({
+            msg: "Please Enter some orderid"
+        })
+    }
+    try{
+        const order=await orderService.getOrderById(orderid)
+        res.status(STATUS_CODES.OK).json({
+            order: order
+        })
+    }catch(err){
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
+            msg: err.message
+        })
+    }
+}
+
+export {addOrder,getAllOrder,getOrderById,cancel,updateStatus,getOrderAdmin,getOrderByIdUser}

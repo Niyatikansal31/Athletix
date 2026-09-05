@@ -52,6 +52,10 @@ const userSchema=mongoose.Schema(
         isActive: {
             type: Boolean,
             default: true
+        },
+        reasonForDeactivation: {
+            type: String,
+            default: null
         }
     },
     {

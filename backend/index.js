@@ -9,6 +9,7 @@ import OrderRoute from "./routes/orderRoutes.js";
 import wishlistRoute from "./routes/wishlistRoutes.js";
 import AddressRoute from "./routes/addressRoute.js";
 import profileRouter from "./routes/profileRoute.js";
+import userManagementRoute from "./routes/userManagementROute.js";
 
 const app=express();
 app.use(express.json());
@@ -20,6 +21,7 @@ app.use('/api/v1/order',OrderRoute)
 app.use('/api/v1/wishlist',wishlistRoute)
 app.use('/api/v1/address',AddressRoute)
 app.use('/api/v1/profile',profileRouter)
+app.use('/api/v1/admin/',userManagementRoute)
 
 connectDB();
 app.listen(process.env.PORT,()=>{

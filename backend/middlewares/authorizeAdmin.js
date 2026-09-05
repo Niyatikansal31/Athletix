@@ -5,8 +5,8 @@ const authorizeAdmin=async (req,res,next)=>{
     try{
         const user=await User.findOne({mobileNumber: req.userPhone})
         if(user.role=='user'){
-            res.status(STATUS_CODES.UNAUTHORIZED).json({
-                msg: "You do not have access to add the products!"
+            res.status(STATUS_CODES.FORBIDDEN).json({
+                msg: "Access denied. Admin privileges are required to perform this action."
             })
         }
 

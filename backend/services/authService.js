@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken"
 import Cart from "../models/cart.js";
 import Wishlist from "../models/wishlist.js";
 
-const signUp=async({name,mobileNumber,password,gender,dob,email})=>{
+const signUp=async({name,mobileNumber,password,gender,dob,email,role})=>{
     const user=await User.findOne({mobileNumber: mobileNumber})
     if(user){
         throw new Error("User Already Exists! Please Login instead.");
@@ -17,6 +17,7 @@ const signUp=async({name,mobileNumber,password,gender,dob,email})=>{
         password: hashedPassword,
         gender,
         dob,
+        role,
         email
     })
     await newUser.save();
