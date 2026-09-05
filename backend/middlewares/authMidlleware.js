@@ -9,13 +9,19 @@ const authMiddleware=(req,res,next)=>{
         })
         return;
     }
+    if (!header.startsWith("Bearer ")) {
+        return res.status(STATUS_CODES.UNAUTHORIZED).json({
+            msg: "Invalid authorization format"
+        });
+    }
+
     try{
         const token=header.split(" ")[1];
         const decoded = jwt.verify(token, process.env.secretToken);
         req.userPhone=decoded.mobileNumber;
         next();
     }catch(err){
-        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
+        res.status(STATUS_CODES.UNAUTHORIZED).json({
             msg: err.message
         })
     }

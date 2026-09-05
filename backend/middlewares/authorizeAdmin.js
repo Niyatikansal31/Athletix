@@ -5,7 +5,7 @@ const authorizeAdmin=async (req,res,next)=>{
     try{
         const user=await User.findOne({mobileNumber: req.userPhone})
         if(user.role=='user'){
-            res.status(STATUS_CODES.FORBIDDEN).json({
+            return res.status(STATUS_CODES.FORBIDDEN).json({
                 msg: "Access denied. Admin privileges are required to perform this action."
             })
         }

@@ -97,11 +97,11 @@ const changePassword = async (req, res) => {
 const reactivate=async(req,res)=>{
     const {mobileNumber,password}=req.body
     if(!mobileNumber){
-        res.status(STATUS_CODES.BAD_REQUEST).json({
+        return res.status(STATUS_CODES.BAD_REQUEST).json({
             msg: "Enter Mobile Number!"
         })
     }if(!password){
-        res.status(STATUS_CODES.BAD_REQUEST).json({
+        return res.status(STATUS_CODES.BAD_REQUEST).json({
             msg: "Enter Password!"
         })
     }
